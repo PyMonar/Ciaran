@@ -1,44 +1,24 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ciaran
 
-## Available Scripts
+> Ciaran 出自「黑暗之魂」太阳王葛温麾下四骑士之黄蜂骑士——基亚兰
 
-In the project directory, you can run:
+## 1. 需求（🚧🚧🚧）
 
-### `yarn start`
+日语单词学习助手
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+目的：帮助记录已学习的单词，并可以快速浏览与复习。复习可以根据熟悉程度进行筛选，也可以根据词性进行筛选，来进行针对性的复习。
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. 默认展示已经录入的所有单词。
+2. 可以录入新的词语，并且进行修改。每一个单词有词语本身、翻译、词性、熟悉程度、例句等属性，如果是动词则包括动词的各种形变。
+3. 词语熟悉程度有三档：熟练，一般，陌生。
+4. 词语词性分为：名词，一类形容词，二类形容词，一类动词，二类动词，三类动词，副词、叹词、专有名词等。
+5. 持续更新中...
 
-### `yarn test`
+## 2. 技术栈
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- Typescript
 
-### `yarn build`
+## License
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+MIT &copy; pymonar
