@@ -1,11 +1,14 @@
+@import '~antd/dist/antd.css';
+
 body {
   color: #333333;
   background-color: #fafafa;
 }
 
 #app {
-  margin: 100px auto;
-  width: 600px;
+  margin: 0 auto;
+  width: 800px;
+  padding-top: 100px;
 }
 
 #app h1 {
@@ -15,38 +18,65 @@ body {
   text-align: center;
 }
 
+.add-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  line-height: 60px;
+}
+
+.add-button {
+  color: #cccccc;
+}
+
 .input-panel {
   height: 60px;
   line-height: 60px;
 }
 
 .inputer {
-  position: relative;
-  margin: 0;
-  width: 100%;
   font-size: 24px;
-  border: 0;
-  padding: 6px;
-  border: 1px solid #999;
-  box-sizing: border-box;
-
-  padding: 16px 16px 16px 16px;
-  border: 1px solid #dedede;
-  background: #ffffff;
-
-  outline-style: none;
-  border-radius: 10px;
-  color: #333333;
-}
-
-::-webkit-input-placeholder {
-  color: #cecece;
+  height: 60px;
 }
 
 .list-panel {
   margin-top: 15px;
-  min-height: 600px;
   background-color: #ffffff;
   border: 1px solid #dedede;
   border-radius: 10px;
+}
+
+.word-list-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.word-name {
+  width: 70px;
+  font-weight: 700;
+}
+
+.word-type {
+  width: 50px;
+}
+
+.word-translation {
+  width: 150px;
+}
+
+.word-sentence {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.word-delete-button {
+  opacity: 0.4;
+}
+
+.word-edit-button,
+.word-delete-button {
+  margin: 0 5px;
 }

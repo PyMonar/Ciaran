@@ -28,9 +28,6 @@ export function cleanWords (): void {
  */
 export function updateWord (word: Word): void {
   let dictionary: WordDictionary = fetchWordDictionary()
-  if (word.name in dictionary) {
-    return
-  }
   dictionary[word.name] = word
   saveWords(dictionary)
 }
@@ -58,7 +55,7 @@ export function filterWords (query: Query): Array<Word> {
   
   // 根据 name 过滤
   if ('name' in query) {
-    result = result.filter(word => word.name === query.name)
+    result = result.filter(word => word.name.indexOf(query.name || '') >= 0)
   }
   // 根据 type 过滤
   if ('type' in query) {

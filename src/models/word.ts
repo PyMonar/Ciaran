@@ -6,7 +6,7 @@ export type WordType = '名' | '动1' | '动2' | '动3' | '形1' | '形2' | '副
 /**
  * 熟悉程度
  */
-export type FamiliarityType = '陌生' | '一般' | '熟悉'
+export type FamiliarityType = 1 | 2 | 3
 
 /**
  * 动词变形类型
