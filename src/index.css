@@ -55,6 +55,7 @@ body {
 }
 
 .word-name {
+  margin-left: 10px;
   width: 70px;
   font-weight: 700;
 }

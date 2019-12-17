@@ -9,8 +9,9 @@ import {
   List,
   Modal,
   Form,
-  Rate,
-  Select
+  Radio,
+  Select,
+  Tag
 } from 'antd'
 
 const { Option } = Select
@@ -153,7 +154,7 @@ export default class App extends React.Component<any, any> {
         word.type = e
         break
       case 'familiarity':
-        word.familiarity = e
+        word.familiarity = e.target.value
         break
       case 'name':
         word.name = e.target.value
@@ -193,7 +194,16 @@ export default class App extends React.Component<any, any> {
       }
     }
 
-    const familiarityList = ['陌生', '一般', '熟悉']
+    const familiarityList = [{
+      name: '陌生',
+      color: '#dddddd'
+    }, {
+      name: '一般',
+      color: '#2db7f5'
+    }, {
+      name: '熟悉',
+      color: '#87d068'
+    }]
 
     type Status = '' | 'error' | 'success' | 'warning' | 'validating' | undefined
     let nameStatus: Status = this.state.word.name.trim() === '' ? 'warning' : 'success'
@@ -219,12 +229,13 @@ export default class App extends React.Component<any, any> {
           renderItem={ (word: Word) => (
             <List.Item>
               <div className='word-list-line'>
+                <Tag color={ familiarityList[word.familiarity - 1].color }>{ familiarityList[word.familiarity - 1].name }</Tag>
                 <div className='word-name'>{ word.name }</div>
                 <div className='word-type'>[{ word.type }]</div>
                 <div className='word-translation'>{ word.translation }</div>
                 <div className='word-sentence'>{ word.sentence }</div>
                 <Button onClick={ this.handleEdit.bind(this, word) } icon='edit' type='dashed' className='word-edit-button'></Button>
-                <Button onClick={ this.handleDelete.bind(this, word) } icon='delete' type='danger' className='word-delete-button'></Button>
+                <Button onClick={ this.handleDelete.bind(this, word) } icon='delete' type='dashed' className='word-delete-button'></Button>
               </div>
             </List.Item>
           )}
@@ -282,7 +293,11 @@ export default class App extends React.Component<any, any> {
               <Input placeholder='请输入例句' onChange={ this.handleInputChange.bind(this, 'sentence') } value={ this.state.word.sentence }/>
             </Form.Item>
             <Form.Item label='熟悉度'>
-              <Rate count={ 3 } onChange={ this.handleInputChange.bind(this, 'familiarity') } tooltips={ familiarityList } value={ this.state.word.familiarity }/>
+              <Radio.Group onChange={ this.handleInputChange.bind(this, 'familiarity') } value={ this.state.word.familiarity }>
+                <Radio.Button value={ 1 }>陌生</Radio.Button>
+                <Radio.Button value={ 2 }>一般</Radio.Button>
+                <Radio.Button value={ 3 }>熟悉</Radio.Button>
+              </Radio.Group>
             </Form.Item>
           </Form>
         </Modal>
