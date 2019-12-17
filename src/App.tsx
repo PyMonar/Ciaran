@@ -1,6 +1,6 @@
 import React from 'react'
 import * as helper from './utils/helper'
-import { Word } from './models/word'
+import { Word, Transform } from './models/word'
 
 // antd
 import {
@@ -26,42 +26,26 @@ export default class App extends React.Component<any, any> {
       type: '名',
       familiarity: 2
     } as Word,
+    transforms: [{
+      type: '基本形',
+      name: ''
+    }, {
+      type: 'ます形',
+      name: ''
+    }, {
+      type: 'ない形',
+      name: ''
+    }, {
+      type: 'て形',
+      name: ''
+    }, {
+      type: 'た形',
+      name: ''
+    }] as Array<Transform>,
     dialogVisible: false
   }
   
   componentDidMount() {
-    // helper.cleanWords()
-    // 新增加词语
-    // helper.updateWord({
-    //   name: '日本語',
-    //   translation: '日语',
-    //   type: '名',
-    //   familiarity: 3,
-    //   sentence: '私は日本語を勉強しています'
-    // })
-    // helper.updateWord({
-    //   name: 'ある',
-    //   translation: '有，在（非意志者）',
-    //   type: '动1',
-    //   familiarity: 3,
-    //   sentence: '机の上に猫があります',
-    //   transforms: [{
-    //     type: '基本形',
-    //     name: 'ある'
-    //   }, {
-    //     type: 'ます形',
-    //     name: 'あります'
-    //   }, {
-    //     type: 'ない形',
-    //     name: 'ない'
-    //   }, {
-    //     type: 'て形',
-    //     name: 'あって'
-    //   }, {
-    //     type: 'た形',
-    //     name: 'あった'
-    //   }]
-    // })
     this.fetchWords()
   }
 
@@ -89,9 +73,39 @@ export default class App extends React.Component<any, any> {
   }
 
   handleEdit = (word: Word) => {
+    let transforms
+    if (word.transforms) {
+      transforms = word.transforms
+    } else {
+      transforms = [{
+        type: '基本形',
+        name: ''
+      }, {
+        type: 'ます形',
+        name: ''
+      }, {
+        type: 'ない形',
+        name: ''
+      }, {
+        type: 'て形',
+        name: ''
+      }, {
+        type: 'た形',
+        name: ''
+      }]
+    }
     this.setState({
       word,
+      transforms,
       dialogVisible: true
+    })
+  }
+
+  handleTransformItemChange = (index: number, e: any) => {
+    let transforms = this.state.transforms
+    transforms[index].name = e.target.value
+    this.setState({
+      transforms
     })
   }
 
@@ -101,6 +115,7 @@ export default class App extends React.Component<any, any> {
       title: '确定删除当前单词吗？',
       okText: '确定',
       cancelText: '取消',
+      centered: true,
       onOk: () => {
         // 删除单词
         helper.delWord(word.name)
@@ -111,6 +126,11 @@ export default class App extends React.Component<any, any> {
   }
 
   handleSave = (e: any) => {
+    let word = this.state.word
+    // 如果是动词，则赋值形变
+    if (word.type === '动1' || word.type === '动2' || word.type === '动3') {
+      word.transforms = this.state.transforms
+    }
     // 保存词汇
     helper.updateWord(this.state.word)
     // 重新加载列表
@@ -162,7 +182,7 @@ export default class App extends React.Component<any, any> {
   }
   
   render () {
-    let { words } = this.state
+    let { words, transforms } = this.state
     
     const formItemLayout = {
       labelCol: {
@@ -179,6 +199,8 @@ export default class App extends React.Component<any, any> {
     let nameStatus: Status = this.state.word.name.trim() === '' ? 'warning' : 'success'
     let translationStatus: Status = this.state.word.translation.trim() === '' ? 'warning' : 'success'
     let saveDisabled = nameStatus !== 'success' && translationStatus !== 'success'
+
+    let wordHasTransform = this.state.word.type === '动1' || this.state.word.type === '动2' || this.state.word.type === '动3'
     
     return (
       <div id='app'>
@@ -241,6 +263,13 @@ export default class App extends React.Component<any, any> {
                 <Option value='叹'>叹词</Option>
                 <Option value='专'>专有名词</Option>
               </Select>
+            </Form.Item>
+            <Form.Item label='形变' className={ wordHasTransform ? '' : 'hide' }>
+              {
+                transforms.map((item: Transform, index: number) => {
+                  return <Input placeholder={ item.type } key={ item.type } value={ item.name } onChange={ this.handleTransformItemChange.bind(this, index) }/>
+                })
+              }
             </Form.Item>
             <Form.Item
               label='翻译'
