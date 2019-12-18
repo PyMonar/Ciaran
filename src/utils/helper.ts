@@ -58,11 +58,11 @@ export function filterWords (query: Query): Array<Word> {
     result = result.filter(word => word.name.indexOf(query.name || '') >= 0)
   }
   // 根据 type 过滤
-  if ('type' in query) {
+  if ('type' in query && query.type !== '全') {
     result = result.filter(word => word.type === query.type)
   }
   // 根据 familiarity 过滤
-  if ('familiarity' in query) {
+  if ('familiarity' in query && query.familiarity !== 0) {
     result = result.filter(word => word.familiarity === query.familiarity)
   }
   return result

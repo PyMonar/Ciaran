@@ -1,6 +1,6 @@
 import React from 'react'
 import * as helper from './utils/helper'
-import { Word, Transform } from './models/word'
+import { Word, Transform, Query } from './models/word'
 
 // antd
 import {
@@ -43,7 +43,11 @@ export default class App extends React.Component<any, any> {
       type: 'た形',
       name: ''
     }] as Array<Transform>,
-    dialogVisible: false
+    dialogVisible: false,
+    search: {
+      familiarity: 0,
+      type: '全'
+    }
   }
   
   componentDidMount() {
@@ -171,6 +175,22 @@ export default class App extends React.Component<any, any> {
     this.setState({ word })
   }
 
+  handleSearchChange = (key: string, e: any) => {
+    let search = { ...this.state.search } as Query
+    if (key === 'type') {
+      search.type = e
+    }
+    if (key === 'familiarity') {
+      search.familiarity = e.target.value
+    }
+    // 搜索
+    let words: Array<Word> = helper.filterWords(search)
+    this.setState({
+      search,
+      words
+    })
+  }
+
   resetForm = (): void => {
     this.setState({
       word: {
@@ -223,7 +243,28 @@ export default class App extends React.Component<any, any> {
         </div>
         <List
           className='list-panel'
-          header={ <div>工具栏</div> }
+          header={ 
+            <div className='search-bar'>
+              <Radio.Group buttonStyle='solid' onChange={ this.handleSearchChange.bind(this, 'familiarity') } value={ this.state.search.familiarity }>
+                <Radio.Button value={ 0 }>全部</Radio.Button>
+                <Radio.Button value={ 1 }>陌生</Radio.Button>
+                <Radio.Button value={ 2 }>一般</Radio.Button>
+                <Radio.Button value={ 3 }>熟悉</Radio.Button>
+              </Radio.Group>
+              <Select className='search-select' placeholder='词性' onChange={ this.handleSearchChange.bind(this, 'type') } value={ this.state.search.type }>
+                <Option value='全'>全部</Option>
+                <Option value='名'>名词</Option>
+                <Option value='动1'>一类动词</Option>
+                <Option value='动2'>二类动词</Option>
+                <Option value='动3'>三类动词</Option>
+                <Option value='形1'>一类形容词</Option>
+                <Option value='形2'>二类形容词</Option>
+                <Option value='副'>副词</Option>
+                <Option value='叹'>叹词</Option>
+                <Option value='专'>专有名词</Option>
+              </Select>
+            </div>
+          }
           bordered
           dataSource={ words }
           renderItem={ (word: Word) => (
@@ -293,7 +334,7 @@ export default class App extends React.Component<any, any> {
               <Input placeholder='请输入例句' onChange={ this.handleInputChange.bind(this, 'sentence') } value={ this.state.word.sentence }/>
             </Form.Item>
             <Form.Item label='熟悉度'>
-              <Radio.Group onChange={ this.handleInputChange.bind(this, 'familiarity') } value={ this.state.word.familiarity }>
+              <Radio.Group buttonStyle='solid' onChange={ this.handleInputChange.bind(this, 'familiarity') } value={ this.state.word.familiarity }>
                 <Radio.Button value={ 1 }>陌生</Radio.Button>
                 <Radio.Button value={ 2 }>一般</Radio.Button>
                 <Radio.Button value={ 3 }>熟悉</Radio.Button>

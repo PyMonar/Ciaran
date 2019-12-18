@@ -47,6 +47,18 @@ body {
   border-radius: 10px;
 }
 
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.search-select {
+  margin-left: 20px;
+  width: 100px;
+}
+
 .word-list-line {
   display: flex;
   flex-direction: row;

@@ -1,12 +1,12 @@
 /**
  * 词性
  */
-export type WordType = '名' | '动1' | '动2' | '动3' | '形1' | '形2' | '副' | '叹' | '专'
+export type WordType = '全' | '名' | '动1' | '动2' | '动3' | '形1' | '形2' | '副' | '叹' | '专'
 
 /**
  * 熟悉程度
  */
-export type FamiliarityType = 1 | 2 | 3
+export type FamiliarityType = 0 | 1 | 2 | 3
 
 /**
  * 动词变形类型
